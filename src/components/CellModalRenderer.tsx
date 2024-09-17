@@ -40,13 +40,12 @@ export default function CellModalRenderer(params) {
 
   return (
     <div>
-      <button className="" onClick={show}>{events[0]}, {events[1]}, ...</button>
+      <button onClick={show}>{events[0]}, {events[1]}, ...</button>
       <Modal
         center
         classNames={{modal: "modal"}}
         open={visible}
-        onClose={hide}
-      >
+        onClose={hide}>
         <div className="ag-theme-alpine margin-3 table-modal" style={events.length <5 ? {height: 250}: {height: 400}}>
           <AgGridReact
             rowData={rowData}

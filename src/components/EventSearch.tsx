@@ -81,7 +81,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
       setDrugs(null)
       setErrMsg(errorText)
     } else {
-      setSearchQuery(`${API_LINK}/animalandveterinary/ndc.json?search=reaction:*${search}*&limit=1000`)
+      setSearchQuery(`${API_LINK}/animalandveterinary/ndc.json?search=reaction:*${search}*+AND+_exists_:reaction&limit=1000`)
     }
   };
 

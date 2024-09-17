@@ -60,6 +60,7 @@ export default function DrugSearch({searchHeader, errorText, placeholder, search
         .then(json => {
           let data = []
           json.results.map(result => {
+            console.log("reaction: ", result.reaction)
             data.push({
               'brand_name': {'brand_name': result['brand_name'],'spl_id': result['spl_id']},
               'reaction': result.reaction,
@@ -83,7 +84,7 @@ export default function DrugSearch({searchHeader, errorText, placeholder, search
       setDrugs(null)
       setErrMsg(errorText)
     } else {
-      setSearchQuery(`${API_LINK}/animalandveterinary/ndc.json?search=brand_name:*${search}*&limit=1000`)
+      setSearchQuery(`${API_LINK}/animalandveterinary/ndc.json?search=brand_name:*${search}*+AND+_exists_:reaction&limit=1000`)
     }
   };
 
