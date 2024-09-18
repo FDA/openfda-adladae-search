@@ -8,7 +8,8 @@ const column_map = [
   {
     field: 'reaction',
     headerName: 'Adverse Events',
-    filter: "agTextColumnFilter",
+    floatingFilter: true,
+    suppressHeaderMenuButton: true,
     filterParams: {
       caseSensitive: false,
       defaultOption: "contains",
@@ -22,7 +23,7 @@ export default function CellModalRenderer(params) {
   const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
   const hide = () => setVisible(false);
-  const defaultColDef = useMemo(() => ({resizable: false, sortable: true}), []);
+  const defaultColDef = useMemo(() => ({resizable: false, sortable: true, filter: "agTextColumnFilter"}), []);
   const events = params.value
   const [rowData, setRowData] = useState([])
 
@@ -53,6 +54,7 @@ export default function CellModalRenderer(params) {
             defaultColDef={defaultColDef}
             onFirstDataRendered={onFirstDataRendered}
             pagination={true}
+            supressMenuHide={false}
             paginationPageSizeSelector={[100, 200, 500]}
             domLayout={events.length <5 ? 'autoHeight': 'normal'}
           />
