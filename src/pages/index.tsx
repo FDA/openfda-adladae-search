@@ -32,7 +32,7 @@ export default IndexPage
 export const Head: HeadFC = () => {
   return (
     <>
-      <title>FDA Online Label Repository</title>
+      <title>FDA Animal Drug Labels and Animal Drug Adverse Event Search</title>
     </>
   )
 }
