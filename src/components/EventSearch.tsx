@@ -161,13 +161,6 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
         )
       }
       <div className='grid-row flex-column'>
-        {drugs && (
-            <div className="ag-theme-alpine margin-bottom-1 padding-left-1" >
-              <b><u>Note</u>:</b> for compatibility reasons, some SPL labels will require using either <i>Microsoft Internet Explorer Mode</i> or <i>Firefox</i> for viewing.
-            </div>
-        )}
-      </div>
-      <div className='grid-row flex-column'>
         <div className='grid-col padding-left-1'>
           {drugs && (
             <div className="ag-theme-alpine margin-bottom-3" style={drugs.length <5 ? {height: 250}: {height: 400}}>
