@@ -109,82 +109,94 @@ export default function DrugSearch({searchHeader, errorText, placeholder, search
   }, []);
 
   return (
-    <div className='bg-white margin-top-3 padding-left-2 padding-right-3 padding-bottom-5'>
-      <div className='grid-row flex-column'>
-        <div className='grid-col flex-auto padding-1'>
-          <b>Search By {searchHeader}:</b>
-        </div>
-        <form className='minw-205 padding-left-1' onSubmit={searchHandler}>
-          <div className='grid-row flex-row'>
-            <TextInput
-              className='input-padding height-4'
-              name='brand_name'
-              type='string'
-              value={search}
-              onChange={event => setSearch(event.target.value)}
-            />
-            <span className='padding-top-1 padding-left-1'>({placeholder})</span>
+      <div className='bg-white margin-top-3 padding-left-2 padding-right-3 padding-bottom-5'>
+        <div className='grid-row flex-column'>
+          <div className='grid-col flex-auto padding-1'>
+            <b>Search By {searchHeader}:</b>
           </div>
-          <button className='minw-205 usa-button margin-top-2' type='submit'>
-            <span className="usa-search__submit-text">Search</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-              className="usa-icon usa-icon--size-3 usa-search__submit-icon" focusable="false" role="img"
-              name="Search"
-            >
-              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-          </button>
-          <button className='minw-205 usa-button margin-top-2' style={{backgroundColor:"grey"}} type='button' onClick={resetForm}>
-            <span className="usa-search__submit-text">Clear</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-              className="usa-icon usa-icon--size-3 usa-search__submit-icon" focusable="false" role="img"
-              name="Clear"
-            >
-              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-          </button>
-        </form>
-      </div>
-      {
-        // Display error message if no results found.
-        errMsg.length > 0 && (
-          <div className='grid-row padding-1'>
-            <div className='grid-col flex-auto'>
-              <Alert type={"info"} headingLevel={'h1'}>{errMsg}</Alert>
-            </div>
-          </div>
-        )
-      }
-      <div className='grid-row flex-column'>
-        <div className='grid-col padding-left-1'>
-          {drugs && (
-            <div className="ag-theme-alpine margin-bottom-3" style={drugs.length <5 ? {height: 250}: {height: 400}}>
-              <AgGridReact
-                rowData={drugs}
-                columnDefs={column_map}
-                defaultColDef={defaultColDef}
-                onFirstDataRendered={onFirstDataRendered}
-                noRowsOverlayComponent={loadingOverlayComponent}
-                noRowsOverlayComponentParams={loadingOverlayComponentParams}
-                pagination={true}
-                paginationPageSizeSelector={[100, 200, 500]}
-                domLayout={drugs.length <5 ? 'autoHeight': 'normal'}
+          <form className='minw-205 padding-left-1' onSubmit={searchHandler}>
+            <div className='grid-row flex-row'>
+              <TextInput
+                  className='input-padding height-4'
+                  name='brand_name'
+                  type='string'
+                  value={search}
+                  onChange={event => setSearch(event.target.value)}
               />
+              <span className='padding-top-1 padding-left-1'>({placeholder})</span>
             </div>
+            <button className='minw-205 usa-button margin-top-2' type='submit'>
+              <span className="usa-search__submit-text">Search</span>
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                  className="usa-icon usa-icon--size-3 usa-search__submit-icon" focusable="false" role="img"
+                  name="Search"
+              >
+                <path
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </button>
+            <button className='minw-205 usa-button margin-top-2' style={{backgroundColor: "grey"}} type='button'
+                    onClick={resetForm}>
+              <span className="usa-search__submit-text">Clear</span>
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                  className="usa-icon usa-icon--size-3 usa-search__submit-icon" focusable="false" role="img"
+                  name="Clear"
+              >
+                <path
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+        {
+          // Display error message if no results found.
+            errMsg.length > 0 && (
+                <div className='grid-row padding-1'>
+                  <div className='grid-col flex-auto'>
+                    <Alert type={"info"} headingLevel={'h1'}>{errMsg}</Alert>
+                  </div>
+                </div>
+            )
+        }
+        <div className='grid-row flex-column'>
+          {drugs && (
+              <div className="ag-theme-alpine margin-bottom-1 padding-left-1">
+                <b><u>Note</u>:</b> for compatibility reasons, some SPL labels will require using either <i>Microsoft
+                Internet Explorer Mode</i> or <i>Firefox</i> for viewing.
+              </div>
           )}
         </div>
+        <div className='grid-row flex-column'>
+          <div className='grid-col padding-left-1'>
+            {drugs && (
+                <div className="ag-theme-alpine margin-bottom-3"
+                     style={drugs.length < 5 ? {height: 250} : {height: 400}}>
+                  <AgGridReact
+                      rowData={drugs}
+                      columnDefs={column_map}
+                      defaultColDef={defaultColDef}
+                      onFirstDataRendered={onFirstDataRendered}
+                      noRowsOverlayComponent={loadingOverlayComponent}
+                      noRowsOverlayComponentParams={loadingOverlayComponentParams}
+                      pagination={true}
+                      paginationPageSizeSelector={[100, 200, 500]}
+                      domLayout={drugs.length < 5 ? 'autoHeight' : 'normal'}
+                  />
+                </div>
+            )}
+          </div>
+        </div>
+        <div className='margin-left-1'>
+          <Link to='/'>Back to the FDA Animal Drug Search Page</Link>
+        </div>
       </div>
-      <div className='margin-left-1'>
-        <Link to='/'>Back to the FDA Animal Drug Search Page</Link>
-      </div>
-    </div>
   )
 }
