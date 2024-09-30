@@ -109,7 +109,12 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
     <div className='bg-white margin-top-3 padding-left-2 padding-right-3 padding-bottom-5'>
       <div className='grid-row flex-column'>
         <div className='grid-col flex-auto padding-1'>
-          <b>Search By {searchHeader}:</b>
+          <i>Veterinary Dictionary for Drug Regulatory Activities (VeDDRA)</i>: A list of standard clinical terms to be used in reporting suspected adverse events in animals or humans after exposure to veterinary medicinal products.
+        </div>
+      </div>
+      <div className='grid-row flex-column'>
+        <div className='grid-col flex-auto padding-1'>
+        <b>Search By {searchHeader}:</b>
         </div>
         <form className='minw-205 padding-left-1' onSubmit={searchHandler}>
           <div className='grid-row flex-row'>
