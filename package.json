@@ -31,6 +31,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-responsive-modal": "^6.4.2",
+    "react-select": "^5.8.1",
     "sass": "^1.66.1"
   },
   "devDependencies": {

@@ -4,6 +4,7 @@ import { Alert, TextInput } from '@trussworks/react-uswds'
 import { Link } from "gatsby";
 import CustomLoadingOverlay from "./CustomLoadingOverlay";
 import { API_LINK } from "../constants/api";
+import AsyncSelect from 'react-select/async';
 
 import '@trussworks/react-uswds/lib/uswds.css'
 import '@trussworks/react-uswds/lib/index.css'
@@ -18,7 +19,6 @@ const column_map = [
   {
     field: 'brand_name',
     headerName: 'Brand Name',
-    sort: 'asc',
     comparator: (valueA, valueB) => {
       if (valueA.brand_name.toLowerCase() == valueB.brand_name.toLowerCase()) return 0;
       return (valueA.brand_name.toLowerCase() > valueB.brand_name.toLowerCase()) ? 1 : -1;
@@ -57,7 +57,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
         })
         .then(json => {
           let data = []
-          json.results.map(result => {
+          json.results[0].drugs.map(result => {
             data.push({
               'brand_name': {'brand_name': result['brand_name'],'spl_id': result['spl_id']},
               'labeler_name': result.labeler_name,
@@ -77,11 +77,11 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
   const searchHandler = (event) => {
     event.preventDefault()
     event.stopPropagation()
-    if (search.length < searchLength) {
+    if (search.value.length < searchLength) {
       setDrugs(null)
       setErrMsg(errorText)
     } else {
-      setSearchQuery(`${API_LINK}/animalandveterinary/ndc.json?search=reaction:*${search}*+AND+_exists_:reaction&limit=1000`)
+      setSearchQuery(`${API_LINK}/animalandveterinary/reactions.json?search=veddra_term_name.exact:"${search.value}"`)
     }
   };
 
@@ -90,6 +90,25 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
     setSearchQuery('')
     setSearch('')
   };
+
+  const promiseOptions = (inputValue: string) => {
+    if (inputValue.length < searchLength  ) {
+      return
+    }
+    return fetch(`${API_LINK}/animalandveterinary/reactions.json?search=veddra_term_name:*${inputValue}*&count=veddra_term_name.exact&limit=1000&sort=veddra_term_name.exact`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status + " Failed Fetch");
+        }
+        return response.json()
+      })
+      .then(json => {
+        return json.results.map(result => ({'value': result.term, 'label': result.term}))
+      })
+      .catch(error => {
+        return
+      });
+  }
 
   const onFirstDataRendered = useCallback((params) => {
     params.api.sizeColumnsToFit();
@@ -118,12 +137,15 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
         </div>
         <form className='minw-205 padding-left-1' onSubmit={searchHandler}>
           <div className='grid-row flex-row'>
-            <TextInput
-              className='input-padding height-4'
-              name='reaction'
+            <AsyncSelect
+              className='input-width'
+              name='veddra_term_name'
               type='string'
               value={search}
-              onChange={event => setSearch(event.target.value)}
+              onChange={setSearch}
+              loadOptions={promiseOptions}
+              loadingMessage={() => 'Enter a minimum of 3 characters'}
+              noOptionsMessage={() => 'Enter a minimum of 3 characters'}
             />
             <span className='padding-top-1 padding-left-1'>({placeholder})</span>
           </div>
@@ -168,7 +190,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
       <div className='grid-row flex-column'>
         <div className='grid-col padding-left-1'>
           {drugs && (
-            <div className="ag-theme-alpine margin-bottom-3" style={drugs.length <5 ? {height: 250}: {height: 400}}>
+            <div className="ag-theme-alpine margin-top-3 margin-bottom-3" style={drugs.length <5 ? {height: 250}: {height: 400}}>
               <AgGridReact
                 rowData={drugs}
                 columnDefs={column_map}
@@ -184,7 +206,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
           )}
         </div>
       </div>
-      <div className='margin-left-1'>
+      <div className='margin-left-1 margin-top-2'>
         <Link to='/'>Back to the FDA Animal Drug Search Page</Link>
       </div>
     </div>
