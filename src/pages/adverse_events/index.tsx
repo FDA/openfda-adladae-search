@@ -8,8 +8,8 @@ const IndexPage: React.FC<PageProps> = () => {
     <Layout>
       <EventSearch
         searchHeader='VeDDRA Term'
-        errorText='At least three characters are required.'
-        placeholder='Type in all or part of the VeDDRA term name'
+        errorText='Enter at least three characters and select a VeDDRA term from the dropdown list.'
+        placeholder='Type in the VeDDRA term name'
         searchLength={3}
       />
     </Layout>

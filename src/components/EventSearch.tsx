@@ -5,6 +5,7 @@ import { Link } from "gatsby";
 import CustomLoadingOverlay from "./CustomLoadingOverlay";
 import { API_LINK } from "../constants/api";
 import AsyncSelect from 'react-select/async';
+import { InputActionMeta } from 'react-select'
 
 import '@trussworks/react-uswds/lib/uswds.css'
 import '@trussworks/react-uswds/lib/index.css'
@@ -41,6 +42,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
   const [drugs, setDrugs] = useState<[] | null>(null)
   const [errMsg, setErrMsg] = useState('')
   const [search, setSearch] = useState('')
+  const [input, setInput] = useState('')
   const [search_query, setSearchQuery] = useState('')
   const defaultColDef = useMemo(() => ({resizable: true, sortable: true}), []);
 
@@ -77,11 +79,11 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
   const searchHandler = (event) => {
     event.preventDefault()
     event.stopPropagation()
-    if (search.value.length < searchLength) {
+    if (search.length < searchLength) {
       setDrugs(null)
       setErrMsg(errorText)
     } else {
-      setSearchQuery(`${API_LINK}/animalandveterinary/reactions.json?search=veddra_term_name.exact:"${search.value}"`)
+      setSearchQuery(`${API_LINK}/animalandveterinary/reactions.json?search=veddra_term_name.exact:"${search}"`)
     }
   };
 
@@ -89,6 +91,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
     setDrugs(null)
     setSearchQuery('')
     setSearch('')
+    setInput('')
   };
 
   const promiseOptions = (inputValue: string) => {
@@ -108,6 +111,14 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
       .catch(error => {
         return
       });
+  }
+
+  const onInputChange = (inputValue: string, { action }: InputActionMeta) => {
+    if (action === 'select-option') {
+      setSearch(inputValue.value)
+      setInput(inputValue)
+    }
+    return inputValue
   }
 
   const onFirstDataRendered = useCallback((params) => {
@@ -133,7 +144,7 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
       </div>
       <div className='grid-row flex-column'>
         <div className='grid-col flex-auto padding-1'>
-        <b>Search By {searchHeader}:</b>
+          <b>Search By {searchHeader}:</b>
         </div>
         <form className='minw-205 padding-left-1' onSubmit={searchHandler}>
           <div className='grid-row flex-row'>
@@ -141,8 +152,8 @@ export default function EventSearch({searchHeader, errorText, placeholder, searc
               className='input-width'
               name='veddra_term_name'
               type='string'
-              value={search}
-              onChange={setSearch}
+              value={input}
+              onChange={onInputChange}
               loadOptions={promiseOptions}
               loadingMessage={() => 'Enter a minimum of 3 characters'}
               noOptionsMessage={() => 'Enter a minimum of 3 characters'}

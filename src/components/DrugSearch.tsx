@@ -92,7 +92,7 @@ export default function DrugSearch({searchHeader, errorText, placeholder, search
     setDrugs(null)
     setSearchQuery('')
     setSearch('')
-  };
+  }
 
   const onFirstDataRendered = useCallback((params) => {
     params.api.sizeColumnsToFit();
