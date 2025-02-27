@@ -6,12 +6,10 @@ import '@trussworks/react-uswds/lib/index.css'
 import '../css/index.scss'
 import '../css/components/Layout.scss'
 import '../css/pages/HomePage.scss'
-import Layout from "../components/Layout";
 
 const IndexPage: React.FC<PageProps> = () => {
 
   return (
-    <Layout>
       <section className='main-content'>
         <div className='flex'>
           <div className='bg-white padding-3'>
@@ -23,7 +21,6 @@ const IndexPage: React.FC<PageProps> = () => {
           </div>
         </div>
       </section>
-    </Layout>
   )
 }
 

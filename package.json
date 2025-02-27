@@ -30,6 +30,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-modal": "^3.16.3",
     "react-responsive-modal": "^6.4.2",
     "react-select": "^5.8.1",
     "sass": "^1.66.1"
@@ -38,6 +39,7 @@
     "@types/node": "^20.3.3",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@types/react-modal": "^3.16.3",
     "typescript": "^5.1.6"
   }
 }

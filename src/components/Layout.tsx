@@ -1,11 +1,11 @@
 import React from "react"
 import { GovBanner } from "@trussworks/react-uswds";
-import { Link } from "gatsby"
 import fdaLogo from "../images/gov-fda-new-white.svg";
 import hhsLogo from "../images/l_HHS_white.png";
 
 import '../css/index.scss'
 import '../css/components/Layout.scss'
+import Disclaimer from "./Dislaimer";
 
 const pageStyles = {
   color: "#232129",
@@ -71,6 +71,7 @@ const links: Array<Object> = [
 export default function Layout({ children }) {
   return (
     <main style={pageStyles}>
+      <Disclaimer/>
       <div>
         <GovBanner/>
         <div className='banner-main menu-shadow bg-dark-blue'>
